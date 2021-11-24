@@ -16,8 +16,8 @@ pipeline {
             stage('Deploy') {
                 steps {
                     echo 'Merge dev branch with master ...'
-		    sh 'git config --global user.email "Anastasiya_Silivonchyk@epam.com"
-                    sh 'git config --global user.name "AnastasiyaSilivonchyk"
+		    sh 'git config --global user.email "Anastasiya_Silivonchyk@epam.com"'
+                    sh 'git config --global user.name "AnastasiyaSilivonchyk"'
 		    sh 'git remote update'
 		    sh 'git fetch'
 		    sh 'git stash'
