@@ -22,7 +22,7 @@ pipeline {
 		    sh 'git fetch'
 		    sh 'git stash'
                     sh 'git checkout main'
-                    sh 'git merge origin/dev'
+                    sh 'git merge origin/dev --allow-unrelated-histories'
                     sh 'git push main'
                 }
             }				
