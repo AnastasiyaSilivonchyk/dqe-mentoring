@@ -20,7 +20,7 @@ pipeline {
                      sh 'git config --global user.name "AnastasiyaSilivonchyk"'
 		     sh 'git stash'
                      sh 'git checkout main'
-                     sh 'git merge origin/dev'
+                     sh 'git merge dev'
                      sh 'git push main'
                 }
             }				
