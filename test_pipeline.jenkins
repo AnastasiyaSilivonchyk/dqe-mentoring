@@ -21,7 +21,7 @@ pipeline {
 		            sh 'git stash'
                     sh 'git checkout main'
                     sh 'git merge dev --no-ff --no-edit'
-                    sh 'git push main'
+                    sh 'git push'
                 }
             }				
         }
