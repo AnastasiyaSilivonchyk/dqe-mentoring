@@ -16,8 +16,8 @@ pipeline {
             stage('Deploy') {
                 steps {
                     echo 'Merge dev branch with master ...'
+		    sh 'git stash'
                     sh 'git checkout main'
-                    checkout([$class: 'GitSCM', branches: [[name: '*/main'],[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'f939d5f9-32c9-4e08-ab51-98ec36b9f2fe', url: 'https://git.epam.com/Anastasiya_Silivonchyk/dqe_mentoring.git']]])
                     sh 'git merge dev'
                     sh 'git push main'
                 }
