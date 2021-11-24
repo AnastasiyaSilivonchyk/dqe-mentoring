@@ -1,0 +1,28 @@
+pipeline {
+        agent any
+        stages {
+            stage('Build') {
+                steps {
+                    echo 'Hello World ...'
+                    sh 'python3 python-file.py'
+                }
+            }
+	        stage('Tests') {
+		        steps {
+		            echo 'Execute tests from pytest ...'
+		            sh 'pytest pytest/TestCases/test_ex.py'
+                }
+            }
+            stage('Deploy') {
+                steps {
+                    echo 'Merge dev branch with master ...'
+		            sh 'git config --global user.email "Anastasiya_Silivonchyk@epam.com"'
+                    sh 'git config --global user.name "AnastasiyaSilivonchyk"'
+		            sh 'git stash'
+                    sh 'git checkout main'
+                    sh 'git merge dev'
+                    sh 'git push main'
+                }
+            }				
+        }
+    }
