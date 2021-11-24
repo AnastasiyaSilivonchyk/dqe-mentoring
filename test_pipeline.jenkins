@@ -16,14 +16,13 @@ pipeline {
             stage('Deploy') {
                 steps {
                     echo 'Merge dev branch with master ...'
-				    sh 'git config --global user.email "Anastasiya_Silivonchyk@epam.com"'
-                    sh 'git config --global user.name "AnastasiyaSilivonchyk"'
+                    sshagent (credentials: [zKaC2O9JUM7KuZ0UMl1HmnCISH4vqu5mQNCWx2PpDbw]) {
 		            sh 'git stash'
                     sh 'git checkout main'
                     sh 'git merge dev'
-					checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'f939d5f9-32c9-4e08-ab51-98ec36b9f2fe', url: 'https://git.epam.com/Anastasiya_Silivonchyk/dqe_mentoring.git']]])
-                    sh 'git push --set-upstream origin main'
+					sh 'git push --set-upstream origin main'
                 }
             }				
         }
     }
+}
