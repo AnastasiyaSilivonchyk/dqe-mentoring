@@ -1,6 +1,11 @@
 pipeline {
         agent any
         stages {
+		    stage('Clone git'} {
+			    steps {
+				checkout([$class: 'GitSCM', branches: [[name: '*/dev']], extensions: [], userRemoteConfigs: [[credentialsId: 'f939d5f9-32c9-4e08-ab51-98ec36b9f2fe', url: 'https://git.epam.com/Anastasiya_Silivonchyk/dqe_mentoring.git']]])
+				}
+			}	
             stage('Build') {
                 steps {
                     echo 'Hello World ...'
