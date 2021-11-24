@@ -2,10 +2,10 @@ import pymssql
 import json
 
 
-connect = pymssql.connect(host=r'',
+connect = pymssql.connect(host=r'host.docker.internal\SQLEXPRESS',
                           database='AdventureWorks2012',
-                          user='',
-                          password='')
+                          user='sa',
+                          password='1ExoticFruit2/')
 
 
 jsonpath = '../Resources/Tables.json'
