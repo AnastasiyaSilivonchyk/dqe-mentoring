@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/RFhometask.iml" filepath="$PROJECT_DIR$/.idea/RFhometask.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../RFhomework/.idea/RFhomework.iml" filepath="$PROJECT_DIR$/../RFhomework/.idea/RFhomework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../pytest/.idea/pytest.iml" filepath="$PROJECT_DIR$/../pytest/.idea/pytest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../robot/.idea/robot.iml" filepath="$PROJECT_DIR$/../robot/.idea/robot.iml" />
+    </modules>
+  </component>
+</project>
