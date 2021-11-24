@@ -1,0 +1,15 @@
+{
+"DBObject":[
+{
+	"SchemaName": "HumanResources",
+	"TableName": "Employee",
+	"ColumnName": "NationalIDNumber"
+},
+{
+	"SchemaName": "Person",
+	"TableName": "Person",
+	"ColumnName": "PersonType, FirstName, LastName"
+}
+]
+}
+

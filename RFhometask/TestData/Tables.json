@@ -1,0 +1,47 @@
+{
+"DBObjects":[
+{
+	"SchemaName":"Production",
+	"TableName":"UnitMeasure",
+	"KeyField":"UnitMeasureCode"
+},
+{
+	"SchemaName":"HumanResources",
+	"TableName":"Employee",
+	"KeyField":"NationalIDNumber"
+}
+],
+"NullFieldsCheck":[
+{
+	"SchemaName":"Person",
+	"TableName":"Person",
+	"NotNullField1":"FirstName",
+	"NotNullField2":"LastName"
+	
+},
+{
+	"SchemaName":"HumanResources",
+	"TableName":"Department",
+	"NotNullField1":"Name",
+	"NotNullField2":"GroupName"
+}
+],
+"ConsistencyCheck":[
+{
+	"SchemaName":"HumanResources",
+	"TableName1":"Employee",
+	"TableName2":"EmployeeDepartmentHistory",
+	"TableName3":"Department",
+	"JoinField":"BusinessEntityID",
+	"CheckField":"DepartmentID"
+}
+],
+"DefaultValuesCheck":[
+{
+	"SchemaName":"Person",
+	"TableName":"Person",
+	"CheckField":"PersonType",
+	"DefaultValues":"'SC', 'IN', 'EM', 'VC', 'GC', 'SP'"
+}
+]
+}

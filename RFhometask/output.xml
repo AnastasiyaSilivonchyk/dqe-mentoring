@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 4.1.2 (Python 3.9.2 on win32)" generated="20211114 18:12:15.824" rpa="false" schemaversion="2">
+<suite id="s1" name="Tests" source="C:\Users\Anastasiya_Silivonch\PycharmProjects\RFhometask\TestCases\tests.robot">
+<kw name="Connect DB" type="SETUP">
+<kw name="Connect To Database Using Custom Params" library="DatabaseLibrary">
+<arg>pymssql</arg>
+<arg>database='${dbName}', user='${dbUser}', password='${dbPass}', host='${dbHost}', port=${dbPort}</arg>
+<doc>Loads the DB API 2.0 module given `dbapiModuleName` then uses it to
+connect to the database using the map string `db_custom_param_string`.</doc>
+<msg timestamp="20211114 18:12:15.952" level="INFO">Executing : Connect To Database Using Custom Params : pymssql.connect(db_api_2.connect(database='AdventureWorks2012', user='sa', password='1ExoticFruit2/', host='EPBYMOGW007C\SQLEXPRESS', port=1433)) </msg>
+<status status="PASS" starttime="20211114 18:12:15.934" endtime="20211114 18:12:16.040"/>
+</kw>
+<status status="PASS" starttime="20211114 18:12:15.933" endtime="20211114 18:12:16.041"/>
+</kw>
+<test id="s1-t1" name="Check NULL values in Employee table">
+<kw name="Query" library="DatabaseLibrary">
+<arg>select count(*) from Person.Person where FirstName is null or LastName is null</arg>
+<doc>Uses the input `selectStatement` to query for the values that will be returned as a list of tuples. Set optional
+input `sansTran` to True to run command without an explicit transaction commit or rollback.
+Set optional input `returnAsDict` to True to return values as a list of dictionaries.</doc>
+<msg timestamp="20211114 18:12:16.042" level="INFO">Executing : Query  |  select count(*) from Person.Person where FirstName is null or LastName is null </msg>
+<status status="PASS" starttime="20211114 18:12:16.042" endtime="20211114 18:12:16.053"/>
+</kw>
+<status status="PASS" starttime="20211114 18:12:16.041" endtime="20211114 18:12:16.054"/>
+</test>
+<test id="s1-t2" name="Check that there is no PersonType except required for the column">
+<kw name="Check If Not Exists In Database" library="DatabaseLibrary">
+<arg>select BusinessEntityID from Person.Person where PersonType not in ('SC', 'IN', 'SP', 'EM', 'VC', 'GC');</arg>
+<doc>This is the negation of `check_if_exists_in_database`.</doc>
+<msg timestamp="20211114 18:12:16.055" level="INFO">Executing : Check If Not Exists In Database  |  select BusinessEntityID from Person.Person where PersonType not in ('SC', 'IN', 'SP', 'EM', 'VC', 'GC'); </msg>
+<msg timestamp="20211114 18:12:16.055" level="INFO">Executing : Query  |  select BusinessEntityID from Person.Person where PersonType not in ('SC', 'IN', 'SP', 'EM', 'VC', 'GC'); </msg>
+<status status="PASS" starttime="20211114 18:12:16.055" endtime="20211114 18:12:16.145"/>
+</kw>
+<status status="PASS" starttime="20211114 18:12:16.054" endtime="20211114 18:12:16.145"/>
+</test>
+<test id="s1-t3" name="Check integrity between Employees and Departments">
+<kw name="Row Count Is 0" library="DatabaseLibrary">
+<arg>select * from HumanResources.Employee e left join HumanResources.EmployeeDepartmentHistory edh on e.BusinessEntityID = edh.BusinessEntityID where edh.DepartmentID not in (select DepartmentID from [HumanResources].[Department]);</arg>
+<doc>Check if any rows are returned from the submitted `selectStatement`. If there are, then this will throw an
+AssertionError. Set optional input `sansTran` to True to run command without an explicit transaction commit or
+rollback.</doc>
+<msg timestamp="20211114 18:12:16.148" level="INFO">Executing : Row Count Is 0  |  select * from HumanResources.Employee e left join HumanResources.EmployeeDepartmentHistory edh on e.BusinessEntityID = edh.BusinessEntityID where edh.DepartmentID not in (select DepartmentID from [HumanResources].[Department]); </msg>
+<msg timestamp="20211114 18:12:16.148" level="INFO">Executing : Row Count  |  select * from HumanResources.Employee e left join HumanResources.EmployeeDepartmentHistory edh on e.BusinessEntityID = edh.BusinessEntityID where edh.DepartmentID not in (select DepartmentID from [HumanResources].[Department]); </msg>
+<status status="PASS" starttime="20211114 18:12:16.147" endtime="20211114 18:12:16.784"/>
+</kw>
+<status status="PASS" starttime="20211114 18:12:16.146" endtime="20211114 18:12:16.784"/>
+</test>
+<test id="s1-t4" name="Check duplicated values">
+<kw name="Row Count Is 0" library="DatabaseLibrary">
+<arg>select NationalIDNumber, count(*) from HumanResources.Employee group by NationalIDNumber having count(*) &gt; 1</arg>
+<doc>Check if any rows are returned from the submitted `selectStatement`. If there are, then this will throw an
+AssertionError. Set optional input `sansTran` to True to run command without an explicit transaction commit or
+rollback.</doc>
+<msg timestamp="20211114 18:12:16.786" level="INFO">Executing : Row Count Is 0  |  select NationalIDNumber, count(*) from HumanResources.Employee group by NationalIDNumber having count(*) &gt; 1 </msg>
+<msg timestamp="20211114 18:12:16.786" level="INFO">Executing : Row Count  |  select NationalIDNumber, count(*) from HumanResources.Employee group by NationalIDNumber having count(*) &gt; 1 </msg>
+<status status="PASS" starttime="20211114 18:12:16.786" endtime="20211114 18:12:16.790"/>
+</kw>
+<status status="PASS" starttime="20211114 18:12:16.784" endtime="20211114 18:12:16.791"/>
+</test>
+<test id="s1-t5" name="Verify table existance">
+<kw name="Read Csv File To List" library="CSVLibrary">
+<var>@{csv_data}</var>
+<arg>${csv_data_path}</arg>
+<doc>Read CSV file and return its content as a Python list of tuples.</doc>
+<msg timestamp="20211114 18:12:16.794" level="INFO">@{csv_data} = [ ('UnitMeasure',) | ('Department',) | ('Employee',) | ('Address',) ]</msg>
+<status status="PASS" starttime="20211114 18:12:16.793" endtime="20211114 18:12:16.794"/>
+</kw>
+<for flavor="IN">
+<var>${TableName}</var>
+<value>@{csv_data}</value>
+<iter>
+<var name="${TableName}">('UnitMeasure',)</var>
+<kw name="Table Must Exist" library="DatabaseLibrary">
+<arg>${TableName}</arg>
+<doc>Check if the table given exists in the database. Set optional input `sansTran` to True to run command without an
+explicit transaction commit or rollback.</doc>
+<msg timestamp="20211114 18:12:16.795" level="INFO">Executing : Table Must Exist  |  UnitMeasure </msg>
+<msg timestamp="20211114 18:12:16.795" level="INFO">Executing : Row Count  |  SELECT * FROM information_schema.tables WHERE table_name='UnitMeasure' </msg>
+<status status="PASS" starttime="20211114 18:12:16.795" endtime="20211114 18:12:16.827"/>
+</kw>
+<status status="PASS" starttime="20211114 18:12:16.794" endtime="20211114 18:12:16.827"/>
+</iter>
+<iter>
+<var name="${TableName}">('Department',)</var>
+<kw name="Table Must Exist" library="DatabaseLibrary">
+<arg>${TableName}</arg>
+<doc>Check if the table given exists in the database. Set optional input `sansTran` to True to run command without an
+explicit transaction commit or rollback.</doc>
+<msg timestamp="20211114 18:12:16.828" level="INFO">Executing : Table Must Exist  |  Department </msg>
+<msg timestamp="20211114 18:12:16.829" level="INFO">Executing : Row Count  |  SELECT * FROM information_schema.tables WHERE table_name='Department' </msg>
+<status status="PASS" starttime="20211114 18:12:16.828" endtime="20211114 18:12:16.850"/>
+</kw>
+<status status="PASS" starttime="20211114 18:12:16.827" endtime="20211114 18:12:16.850"/>
+</iter>
+<iter>
+<var name="${TableName}">('Employee',)</var>
+<kw name="Table Must Exist" library="DatabaseLibrary">
+<arg>${TableName}</arg>
+<doc>Check if the table given exists in the database. Set optional input `sansTran` to True to run command without an
+explicit transaction commit or rollback.</doc>
+<msg timestamp="20211114 18:12:16.852" level="INFO">Executing : Table Must Exist  |  Employee </msg>
+<msg timestamp="20211114 18:12:16.852" level="INFO">Executing : Row Count  |  SELECT * FROM information_schema.tables WHERE table_name='Employee' </msg>
+<status status="PASS" starttime="20211114 18:12:16.851" endtime="20211114 18:12:16.874"/>
+</kw>
+<status status="PASS" starttime="20211114 18:12:16.851" endtime="20211114 18:12:16.874"/>
+</iter>
+<iter>
+<var name="${TableName}">('Address',)</var>
+<kw name="Table Must Exist" library="DatabaseLibrary">
+<arg>${TableName}</arg>
+<doc>Check if the table given exists in the database. Set optional input `sansTran` to True to run command without an
+explicit transaction commit or rollback.</doc>
+<msg timestamp="20211114 18:12:16.876" level="INFO">Executing : Table Must Exist  |  Address </msg>
+<msg timestamp="20211114 18:12:16.876" level="INFO">Executing : Row Count  |  SELECT * FROM information_schema.tables WHERE table_name='Address' </msg>
+<status status="PASS" starttime="20211114 18:12:16.875" endtime="20211114 18:12:16.897"/>
+</kw>
+<status status="PASS" starttime="20211114 18:12:16.874" endtime="20211114 18:12:16.897"/>
+</iter>
+<status status="PASS" starttime="20211114 18:12:16.794" endtime="20211114 18:12:16.897"/>
+</for>
+<status status="PASS" starttime="20211114 18:12:16.791" endtime="20211114 18:12:16.898"/>
+</test>
+<test id="s1-t6" name="Check metadata for UnitMeasure table">
+<kw name="Query" library="DatabaseLibrary">
+<var>${metadata}</var>
+<arg>select COLUMN_NAME, DATA_TYPE from ${dbName}.INFORMATION_SCHEMA.COLUMNS where TABLE_NAME = 'UnitMeasure'</arg>
+<doc>Uses the input `selectStatement` to query for the values that will be returned as a list of tuples. Set optional
+input `sansTran` to True to run command without an explicit transaction commit or rollback.
+Set optional input `returnAsDict` to True to return values as a list of dictionaries.</doc>
+<msg timestamp="20211114 18:12:16.901" level="INFO">Executing : Query  |  select COLUMN_NAME, DATA_TYPE from AdventureWorks2012.INFORMATION_SCHEMA.COLUMNS where TABLE_NAME = 'UnitMeasure' </msg>
+<msg timestamp="20211114 18:12:16.967" level="INFO">${metadata} = [('UnitMeasureCode', 'nchar'), ('Name', 'nvarchar'), ('ModifiedDate', 'datetime')]</msg>
+<status status="PASS" starttime="20211114 18:12:16.900" endtime="20211114 18:12:16.967"/>
+</kw>
+<for flavor="IN">
+<var>${tuple}</var>
+<value>${metadata}</value>
+<iter>
+<var name="${tuple}">[('UnitMeasureCode', 'nchar'), ('Name', 'nvarchar'), ('ModifiedDate', 'datetime')]</var>
+<kw name="Log To Console" library="BuiltIn">
+<arg>\n${tuple}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20211114 18:12:16.967" endtime="20211114 18:12:16.968"/>
+</kw>
+<status status="PASS" starttime="20211114 18:12:16.967" endtime="20211114 18:12:16.968"/>
+</iter>
+<status status="PASS" starttime="20211114 18:12:16.967" endtime="20211114 18:12:16.968"/>
+</for>
+<status status="PASS" starttime="20211114 18:12:16.898" endtime="20211114 18:12:16.969"/>
+</test>
+<test id="s1-t7" name="test_test">
+<kw name="Read data from CSV file">
+<kw name="Get File" library="OperatingSystem">
+<var>${csv}</var>
+<arg>TestData/DuplCheck.csv</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20211114 18:12:16.971" level="INFO" html="true">Getting file '&lt;a href="file://C:\Users\Anastasiya_Silivonch\PycharmProjects\RFhometask\TestData\DuplCheck.csv"&gt;C:\Users\Anastasiya_Silivonch\PycharmProjects\RFhometask\TestData\DuplCheck.csv&lt;/a&gt;'.</msg>
+<msg timestamp="20211114 18:12:16.972" level="INFO">${csv} = Table
+HumanResources.Employee
+</msg>
+<status status="PASS" starttime="20211114 18:12:16.970" endtime="20211114 18:12:16.972"/>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<var>${data}</var>
+<arg>${csv}</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20211114 18:12:16.972" level="INFO">${data} = ['Table\nHumanResources.Employee\n']</msg>
+<status status="PASS" starttime="20211114 18:12:16.972" endtime="20211114 18:12:16.972"/>
+</kw>
+<kw name="Split To Lines" library="String">
+<var>${lines}</var>
+<arg>${data}</arg>
+<arg>1</arg>
+<doc>Splits the given string to lines.</doc>
+<msg timestamp="20211114 18:12:16.974" level="FAIL">AttributeError: 'list' object has no attribute 'splitlines'</msg>
+<status status="FAIL" starttime="20211114 18:12:16.973" endtime="20211114 18:12:16.974"/>
+</kw>
+<for flavor="IN">
+<var>${line}</var>
+<value>${data}</value>
+<iter>
+<var name="${line}">${line}</var>
+<kw name="Log To Console" library="BuiltIn">
+<arg>\n${line}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20211114 18:12:16.976" endtime="20211114 18:12:16.976"/>
+</kw>
+<status status="NOT RUN" starttime="20211114 18:12:16.976" endtime="20211114 18:12:16.976"/>
+</iter>
+<status status="NOT RUN" starttime="20211114 18:12:16.976" endtime="20211114 18:12:16.976"/>
+</for>
+<status status="FAIL" starttime="20211114 18:12:16.970" endtime="20211114 18:12:16.976"/>
+</kw>
+<status status="FAIL" starttime="20211114 18:12:16.969" endtime="20211114 18:12:16.977">AttributeError: 'list' object has no attribute 'splitlines'</status>
+</test>
+<kw name="Disconnect From Database" library="DatabaseLibrary" type="TEARDOWN">
+<doc>Disconnects from the database.</doc>
+<msg timestamp="20211114 18:12:16.979" level="INFO">Executing : Disconnect From Database</msg>
+<status status="PASS" starttime="20211114 18:12:16.979" endtime="20211114 18:12:16.980"/>
+</kw>
+<doc>Suite description</doc>
+<status status="FAIL" starttime="20211114 18:12:15.828" endtime="20211114 18:12:16.980"/>
+</suite>
+<statistics>
+<total>
+<stat pass="6" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="6" fail="1" skip="0" id="s1" name="Tests">Tests</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
