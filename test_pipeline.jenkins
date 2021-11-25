@@ -21,7 +21,7 @@ pipeline {
 	            sh 'git remote update'
                     sh 'git checkout main'
                     sh 'git merge origin/dev'
-		    sh 'git push --set-upstream origin main'
+		    sh 'git push'
                 }
             }				
         }
