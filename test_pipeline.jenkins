@@ -18,11 +18,11 @@ pipeline {
                     echo 'Merge dev branch with master ...'
                     sh 'git config --global user.email "Anastasiya_Silivonchyk@epam.com"'
                     sh 'git config --global user.name "AnastasiyaSilivonchyk"'
-		            sh 'git stash'
-					sh 'git remote update'
+		    sh 'git stash'
+	            sh 'git remote update'
                     sh 'git checkout main'
-                    sh 'git merge dev'
-					sh 'git push --set-upstream origin main'
+                    sh 'git merge origin/dev'
+		    sh 'git push --set-upstream origin main'
                 }
             }				
         }
